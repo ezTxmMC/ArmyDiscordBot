@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.api.entities.User
 import org.json.JSONArray
+import org.json.JSONObject
 import java.awt.Color
 import java.lang.StringBuilder
 
@@ -41,6 +42,19 @@ class Embed {
             embedBuilder.setFooter("powered by eztxm.de")
             embedBuilder.setColor(Color(0, 95, 255))
             embedBuilder.setDescription(stringBuilder.toString())
+            return embedBuilder.build()
+        }
+
+        fun application(application: JSONObject): MessageEmbed {
+            val embedBuilder = EmbedBuilder()
+            embedBuilder.setTitle("ezArmy")
+            embedBuilder.setFooter("powered by eztxm.de")
+            embedBuilder.setColor(Color(0, 95, 255))
+            embedBuilder.addField("Name und Alter", application.getString("nameAge"), false)
+            embedBuilder.addField("Stelle", application.getString("position"), false)
+            embedBuilder.addField("Hobbys", application.getString("hobbies"), false)
+            embedBuilder.addField("Stärken und Schwächen", application.getString("strongWeek"), false)
+            embedBuilder.addField("Erfahrung", application.getString("experience"), false)
             return embedBuilder.build()
         }
     }

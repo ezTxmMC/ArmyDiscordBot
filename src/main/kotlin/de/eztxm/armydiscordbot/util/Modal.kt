@@ -28,7 +28,7 @@ class Modal {
                 .setMinLength(40)
                 .setRequired(true)
                 .build()
-            val experiences = TextInput.create("experiences", "Erfahrung(en)", TextInputStyle.PARAGRAPH)
+            val experiences = TextInput.create("experience", "Erfahrung", TextInputStyle.PARAGRAPH)
                 .setMinLength(50)
                 .setRequired(true)
                 .build()

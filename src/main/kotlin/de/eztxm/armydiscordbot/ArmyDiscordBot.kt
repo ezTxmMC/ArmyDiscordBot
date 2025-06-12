@@ -3,6 +3,7 @@ package de.eztxm.armydiscordbot
 import de.eztxm.armydiscordbot.listener.ButtonListener
 import de.eztxm.armydiscordbot.listener.JoinListener
 import de.eztxm.armydiscordbot.listener.LeaveListener
+import de.eztxm.armydiscordbot.listener.ModalListener
 import de.eztxm.armydiscordbot.util.UpdateManager
 import de.eztxm.config.JsonConfig
 import net.dv8tion.jda.api.JDA
@@ -33,6 +34,7 @@ object ArmyDiscordBot {
             .enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_PRESENCES)
             .addEventListeners(JoinListener())
             .addEventListeners(LeaveListener())
+            .addEventListeners(ModalListener())
             .addEventListeners(ButtonListener())
             .build().awaitReady()
         val executor = Executors.newScheduledThreadPool(2)
