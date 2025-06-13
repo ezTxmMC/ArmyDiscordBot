@@ -8,6 +8,7 @@ class UpdateEmbedsCommand {
 
         fun execute(event: SlashCommandInteractionEvent) {
             UpdateManager.updateEmbeds(event.jda)
+            event.reply("Die Embeds wurden geupdatet!").setEphemeral(true).queue()
         }
     }
 }

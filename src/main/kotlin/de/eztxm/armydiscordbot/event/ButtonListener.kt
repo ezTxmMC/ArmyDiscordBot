@@ -1,4 +1,4 @@
-package de.eztxm.armydiscordbot.listener
+package de.eztxm.armydiscordbot.event
 
 import de.eztxm.armydiscordbot.util.Modal
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent

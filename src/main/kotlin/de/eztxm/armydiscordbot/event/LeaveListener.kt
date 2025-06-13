@@ -1,4 +1,4 @@
-package de.eztxm.armydiscordbot.listener
+package de.eztxm.armydiscordbot.event
 
 import de.eztxm.armydiscordbot.util.Embed
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent

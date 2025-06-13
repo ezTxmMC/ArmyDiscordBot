@@ -61,7 +61,7 @@
     <repositories>
         <repository>
             <id>eztxm-repo</id>
-            <url>https://repo.eztxm.de/maven</url>
+            <url>https://repo.eztxm.de/maven/snapshots</url>
         </repository>
     </repositories>
 
@@ -89,9 +89,14 @@
             <version>5.6.1</version>
         </dependency>
         <dependency>
-            <groupId>de.eztxm</groupId>
-            <artifactId>ezlib-config-json</artifactId>
-            <version>1.0-ALPHA10</version>
+            <groupId>de.eztxm.ezlib.config</groupId>
+            <artifactId>json</artifactId>
+            <version>1.0-BETA1.indev6</version>
+        </dependency>
+        <dependency>
+            <groupId>de.eztxm.ezlib.database</groupId>
+            <artifactId>sqlite</artifactId>
+            <version>1.0-BETA1.indev6</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

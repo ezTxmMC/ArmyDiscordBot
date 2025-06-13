@@ -1,14 +1,13 @@
 package de.eztxm.armydiscordbot.util
 
 import de.eztxm.armydiscordbot.ArmyDiscordBot
-import de.eztxm.config.JsonConfig
+import de.eztxm.ezlib.config.JsonConfig
 import net.dv8tion.jda.api.JDA
 
 class UpdateManager {
     companion object {
 
         fun updateEmbeds(jda: JDA) {
-            ArmyDiscordBot.jsonConfig = null
             ArmyDiscordBot.jsonConfig = JsonConfig("data", "config.json")
             val guild = jda.getGuildById("962473401157574667")
             val channel = guild!!.getTextChannelById("1257682699498557460")
