@@ -9,5 +9,13 @@ class Button {
         fun apply(): Button {
             return Button.primary("apply", "Bewerbe dich jetzt!").withEmoji(Emoji.fromUnicode("📑"))
         }
+
+        fun acceptApplication(): Button {
+            return Button.success("acceptApplication", "Annehmen")
+        }
+
+        fun declineApplication(): Button {
+            return Button.danger("declineApplication", "Ablehnen")
+        }
     }
 }

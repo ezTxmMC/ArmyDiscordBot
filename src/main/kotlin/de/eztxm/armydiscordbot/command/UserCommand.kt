@@ -13,6 +13,7 @@ class UserCommand {
                 "add" -> {
                     val user = event.getOption("user")?.asUser
                     if (management.userExist(user?.id)) {
+                        println()
                         event.reply("Benutzer ${user?.asMention} existiert bereits.").setEphemeral(true).queue()
                         return
                     }

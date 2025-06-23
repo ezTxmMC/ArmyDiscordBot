@@ -94,7 +94,7 @@
         </dependency>
         <dependency>
             <groupId>de.eztxm.ezlib.database</groupId>
-            <artifactId>sqlite</artifactId>
+            <artifactId>mariadb</artifactId>
             <version>1.0-BETA1.indev6</version>
         </dependency>
         <dependency>

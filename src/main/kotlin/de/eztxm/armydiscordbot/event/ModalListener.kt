@@ -1,16 +1,23 @@
 package de.eztxm.armydiscordbot.event
 
+import de.eztxm.armydiscordbot.ArmyDiscordBot
+import de.eztxm.armydiscordbot.util.Button
 import de.eztxm.armydiscordbot.util.Embed
 import de.eztxm.ezlib.config.`object`.JsonObject
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
-import net.dv8tion.jda.api.utils.messages.MessageCreateData
+import net.dv8tion.jda.api.interactions.components.ActionRow
+import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder
 
 class ModalListener : ListenerAdapter() {
 
     override fun onModalInteraction(event: ModalInteractionEvent) {
         when (event.interaction.modalId) {
             "apply" -> {
+                if (ArmyDiscordBot.database.applicationManagement.applicationOpened(event.user.id)) {
+                    event.reply("Du hast bereits eine offene Bewerbung.").setEphemeral(true).queue()
+                    return
+                }
                 val applicationForum = event.guild!!.getForumChannelById("1382785949364125877")
                 val application = JsonObject()
                 application.put("nameAge", event.getValue("nameAge")?.asString)
@@ -19,10 +26,24 @@ class ModalListener : ListenerAdapter() {
                 application.put("strongWeek", event.getValue("strongWeek")?.asString)
                 application.put("experience", event.getValue("experience")?.asString)
                 val embed = Embed.application(application)
+                val messageData = MessageCreateBuilder()
+                    .setEmbeds(embed)
+                    .setComponents(
+                        ActionRow.of(
+                            Button.acceptApplication(),
+                            Button.declineApplication()
+                        )
+                    )
+                    .build()
                 applicationForum?.createForumPost(
-                    "Bewerbung $event.user.effectiveName",
-                    MessageCreateData.fromEmbeds(listOf(embed))
-                )?.queue()
+                    "Bewerbung ${event.user.effectiveName}",
+                    messageData
+                )?.queue { forumPost ->
+                    ArmyDiscordBot.database.applicationManagement.addApplication(
+                        event.user.id,
+                        forumPost.threadChannel.id
+                    )
+                }
                 event.reply("Deine Bewerbung wurde ans Team vermittelt.").setEphemeral(true).queue()
             }
         }

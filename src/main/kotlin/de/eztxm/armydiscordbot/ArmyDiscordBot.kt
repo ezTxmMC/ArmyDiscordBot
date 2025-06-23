@@ -14,6 +14,8 @@ import net.dv8tion.jda.api.interactions.commands.OptionType
 import net.dv8tion.jda.api.interactions.commands.build.Commands
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData
 import net.dv8tion.jda.api.requests.GatewayIntent
+import net.dv8tion.jda.api.utils.ChunkingFilter
+import net.dv8tion.jda.api.utils.MemberCachePolicy
 import net.dv8tion.jda.api.utils.cache.CacheFlag
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -32,15 +34,21 @@ object ArmyDiscordBot {
         applyEmbed.add("This is the apply embed")
         embeds.put("ApplyEmbed", applyEmbed)
         jsonConfig.addDefault("Embeds", embeds)
-        val databaseData = JsonObject()
-        databaseData.put("Path", "data")
-        databaseData.put("File", "sqlite.db")
-        database = Database(databaseData)
+        val databaseConfig = JsonConfig("data", "database.json")
+        databaseConfig.addDefault("Host", "127.0.0.1")
+        databaseConfig.addDefault("Port", 3306)
+        databaseConfig.addDefault("Database", "ezarmy_bot")
+        databaseConfig.addDefault("Username", "root")
+        databaseConfig.addDefault("Password", "")
+        database = Database(databaseConfig.json)
         jda = JDABuilder.createDefault(jsonConfig["Token"].asString())
             .enableCache(CacheFlag.MEMBER_OVERRIDES)
             .disableCache(CacheFlag.STICKER, CacheFlag.EMOJI, CacheFlag.VOICE_STATE)
             .enableIntents(GatewayIntent.GUILD_MEMBERS, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_PRESENCES)
+            .setChunkingFilter(ChunkingFilter.ALL)
+            .setMemberCachePolicy(MemberCachePolicy.ALL)
             .addEventListeners(
+                ChatListener(),
                 JoinListener(),
                 LeaveListener(),
                 ModalListener(),
@@ -64,6 +72,17 @@ object ArmyDiscordBot {
                         "remove",
                         "User vom Management manuell entfernen."
                     ).addOption(OptionType.USER, "user", "Benutzer angeben")
+                ),
+            Commands.slash("users", "User Management Befehl.")
+                .addSubcommands(
+                    SubcommandData(
+                        "add",
+                        "User zum Management manuell hinzufügen."
+                    ),
+                    SubcommandData(
+                        "remove",
+                        "User vom Management manuell entfernen."
+                    )
                 )
         ).queue()
         val executor = Executors.newScheduledThreadPool(2)

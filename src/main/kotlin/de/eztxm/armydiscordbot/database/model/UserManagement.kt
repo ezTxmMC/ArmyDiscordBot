@@ -11,7 +11,6 @@ class UserManagement(internal val database: Database) {
     fun addUser(id: String?) {
         requireNotNull(id)
         if (userExist(id)) {
-            println("TE")
             return
         }
         database.sqlConnection.put("INSERT INTO users(id) VALUES (?);", id)
@@ -19,21 +18,34 @@ class UserManagement(internal val database: Database) {
 
     fun removeUser(id: String?) {
         requireNotNull(id)
-        if (userExist(id)) {
+        if (!userExist(id)) {
             return
         }
         database.sqlConnection.put("DELETE FROM users WHERE id = ?;", id)
     }
 
-    fun userExist(id: String?): Boolean {
-        requireNotNull(id)
-        return try {
-            val resultSet = database.sqlConnection.query("SELECT id FROM users WHERE id = ?;", id)
-            println(resultSet.next())
-            resultSet?.next() == true && resultSet.getString("id") == id
+    fun addUserXP(id: String?, xp: Long) {
+        try {
+            val resultSet = database.sqlConnection.query("SELECT xp FROM users WHERE id = ?;", id)
+            if (resultSet.next()) {
+                val xp = resultSet.getLong("xp") + xp
+                database.sqlConnection.put("UPDATE users SET xp = ? WHERE id = ?;", xp, id)
+            }
         } catch (e: Exception) {
             e.printStackTrace()
-            false
         }
+    }
+
+    fun userExist(id: String?): Boolean {
+        requireNotNull(id)
+        try {
+            val resultSet = database.sqlConnection.query("SELECT id FROM users WHERE id = ?;", id)
+            if (resultSet.next()) {
+                return resultSet.getString("id") == id
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return false
     }
 }
