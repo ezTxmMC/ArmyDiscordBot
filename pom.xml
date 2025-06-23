@@ -12,6 +12,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin.compiler.jvmTarget>17</kotlin.compiler.jvmTarget>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <build>
@@ -54,6 +56,33 @@
                     <mainClass>MainKt</mainClass>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>de.eztxm.armydiscordbot.ArmyDiscordBot</mainClass>
+                                    <manifestEntries>
+                                        <Main-Class>com.beispiel.App</Main-Class>
+                                        <Build-Time>${maven.build.timestamp}</Build-Time>
+                                        <X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
+                                        <X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>
+                                    </manifestEntries>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
