@@ -5,4 +5,4 @@ COPY pom.xml /app/pom.xml
 COPY data /app/target/data
 COPY src /app/src
 RUN mvn clean package
-ENTRYPOINT ["java", "-jar", "/app/target/ArmyDiscordBot.jar"]
+ENTRYPOINT ["java", "-jar", "/app/target/armydiscordbot.jar"]
