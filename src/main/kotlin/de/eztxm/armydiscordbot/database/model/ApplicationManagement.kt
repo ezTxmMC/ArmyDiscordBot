@@ -22,7 +22,7 @@ class ApplicationManagement(internal val database: Database) {
         if (!applicationOpened(authorId)) {
             return
         }
-        database.sqlConnection.put("UPDATE applications SET isOpen = 0 WHERE authorId = ?;", authorId)
+        database.sqlConnection.put("DELETE FROM applications WHERE authorId = ?;", authorId)
     }
 
     fun getUserByThread(threadId: String?): String? {
