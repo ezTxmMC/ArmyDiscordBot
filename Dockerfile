@@ -1,4 +1,5 @@
-FROM eclipse-temurin:17-jdk
+FROM eclipse-temurin:17-jdk-alpine
+RUN apk --no-cache add maven
 WORKDIR /app
 COPY pom.xml .
 COPY src src
