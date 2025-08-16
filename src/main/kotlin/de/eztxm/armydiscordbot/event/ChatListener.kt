@@ -8,6 +8,9 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter
 class ChatListener : ListenerAdapter() {
 
     override fun onMessageReceived(event: MessageReceivedEvent) {
+        if (event.member is null) {
+            return
+        }
         when (event.message.type) {
             MessageType.GUILD_MEMBER_JOIN -> ArmyDiscordBot.database.userManagement.addUserXP(event.member!!.id, 50)
             MessageType.GUILD_MEMBER_BOOST -> ArmyDiscordBot.database.userManagement.addUserXP(event.member!!.id, 100)
