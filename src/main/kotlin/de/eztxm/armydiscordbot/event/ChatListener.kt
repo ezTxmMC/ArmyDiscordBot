@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter
 class ChatListener : ListenerAdapter() {
 
     override fun onMessageReceived(event: MessageReceivedEvent) {
-        if (event.member is null) {
+        if (event.member == null) {
             return
         }
         when (event.message.type) {
