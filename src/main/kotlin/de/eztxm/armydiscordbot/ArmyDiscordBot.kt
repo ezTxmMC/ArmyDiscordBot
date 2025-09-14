@@ -32,7 +32,7 @@ object ArmyDiscordBot {
         val embeds = JsonObject()
         val applyEmbed = JsonArray<String>()
         applyEmbed.add("This is the apply embed")
-        embeds.put("ApplyEmbed", applyEmbed)
+        embeds["ApplyEmbed"] = applyEmbed
         jsonConfig.addDefault("Embeds", embeds)
         val databaseConfig = JsonConfig("data", "database.json")
         databaseConfig.addDefault("Host", "127.0.0.1")
