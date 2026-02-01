@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed
 import net.dv8tion.jda.api.entities.User
 import java.awt.Color
 
-class Embed {
+class Embeds {
     companion object {
 
         fun joinServer(user: User): MessageEmbed {

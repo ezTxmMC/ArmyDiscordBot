@@ -1,12 +1,12 @@
 package de.eztxm.armydiscordbot.event
 
 import de.eztxm.armydiscordbot.ArmyDiscordBot
-import de.eztxm.armydiscordbot.util.Button
-import de.eztxm.armydiscordbot.util.Embed
+import de.eztxm.armydiscordbot.util.Buttons
+import de.eztxm.armydiscordbot.util.Embeds
 import de.eztxm.ezlib.config.`object`.JsonObject
+import net.dv8tion.jda.api.components.actionrow.ActionRow
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
-import net.dv8tion.jda.api.interactions.components.ActionRow
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder
 
 class ModalListener : ListenerAdapter() {
@@ -25,13 +25,13 @@ class ModalListener : ListenerAdapter() {
                 application.put("hobbies", event.getValue("hobbies")?.asString)
                 application.put("strongWeek", event.getValue("strongWeek")?.asString)
                 application.put("experience", event.getValue("experience")?.asString)
-                val embed = Embed.application(application)
+                val embed = Embeds.application(application)
                 val messageData = MessageCreateBuilder()
                     .setEmbeds(embed)
                     .setComponents(
                         ActionRow.of(
-                            Button.acceptApplication(),
-                            Button.declineApplication()
+                            Buttons.acceptApplication(),
+                            Buttons.declineApplication()
                         )
                     )
                     .build()

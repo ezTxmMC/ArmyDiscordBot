@@ -7,14 +7,14 @@
     <groupId>de.eztxm</groupId>
     <artifactId>armydiscordbot</artifactId>
     <version>1.0</version>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.code.style>official</kotlin.code.style>
-        <kotlin.compiler.jvmTarget>17</kotlin.compiler.jvmTarget>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+
+        <kotlin.compiler.jvmTarget>21</kotlin.compiler.jvmTarget>
+        <maven.compiler.release>21</maven.compiler.release>
     </properties>
+
 
     <repositories>
         <repository>
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit5</artifactId>
-            <version>2.0.0</version>
+            <version>2.3.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -39,12 +39,12 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
-            <version>2.0.0</version>
+            <version>2.3.0</version>
         </dependency>
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>5.6.1</version>
+            <version>6.3.0</version>
         </dependency>
         <dependency>
             <groupId>de.eztxm.ezlib.config</groupId>
@@ -69,7 +69,7 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-                <version>2.0.0</version>
+                <version>2.3.0</version>
                 <executions>
                     <execution>
                         <id>compile</id>

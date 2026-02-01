@@ -1,8 +1,8 @@
 package de.eztxm.armydiscordbot.event
 
 import de.eztxm.armydiscordbot.ArmyDiscordBot
-import de.eztxm.armydiscordbot.util.Embed
-import de.eztxm.armydiscordbot.util.Modal
+import de.eztxm.armydiscordbot.util.Embeds
+import de.eztxm.armydiscordbot.util.Modals
 import net.dv8tion.jda.api.Permission
 import net.dv8tion.jda.api.entities.channel.concrete.ThreadChannel
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent
@@ -11,8 +11,8 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter
 class ButtonListener : ListenerAdapter() {
 
     override fun onButtonInteraction(event: ButtonInteractionEvent) {
-        when (event.interaction.button.id) {
-            "apply" -> event.replyModal(Modal.apply()).queue()
+        when (event.interaction.button.customId) {
+            "apply" -> event.replyModal(Modals.apply()).queue()
             "acceptApplication" -> {
                 val threadId = (event.channel as ThreadChannel).id
                 val authorId = ArmyDiscordBot.database.applicationManagement.getUserByThread(threadId)
@@ -20,17 +20,14 @@ class ButtonListener : ListenerAdapter() {
                     return
                 }
                 ArmyDiscordBot.database.applicationManagement.closeApplication(authorId)
-                val member = event.guild!!.getMemberById(authorId!!)
-                if (member == null) {
-                    return
-                }
+                val member = event.guild!!.getMemberById(authorId!!) ?: return
                 event.guild!!.getCategoryById("1257682614064517190")!!
                     .createTextChannel("\uD83D\uDCD1｜${member.user.globalName}").queue { textChannel ->
                         textChannel.upsertPermissionOverride(event.guild!!.publicRole)
                             .setDenied(Permission.VIEW_CHANNEL)
                             .queue()
                         textChannel.upsertPermissionOverride(member).setAllowed(Permission.VIEW_CHANNEL).queue()
-                        textChannel.sendMessageEmbeds(Embed.applicationAnswer(true)).queue()
+                        textChannel.sendMessageEmbeds(Embeds.applicationAnswer(true)).queue()
                         textChannel.sendMessage(event.member!!.asMention).queue()
                     }
                 event.reply("${event.member!!.user.effectiveName} hat die Bewerbung angenommen.").setEphemeral(false)
@@ -44,10 +41,7 @@ class ButtonListener : ListenerAdapter() {
                     return
                 }
                 ArmyDiscordBot.database.applicationManagement.closeApplication(authorId)
-                val member = event.guild!!.getMemberById(authorId!!)
-                if (member == null) {
-                    return
-                }
+                val member = event.guild!!.getMemberById(authorId!!) ?: return
                 event.guild!!.getCategoryById("1257682614064517190")!!
                     .createTextChannel("\uD83D\uDCD1｜${member.user.globalName}").queue { textChannel ->
                         textChannel.upsertPermissionOverride(event.guild!!.publicRole)
@@ -56,7 +50,7 @@ class ButtonListener : ListenerAdapter() {
                         textChannel.upsertPermissionOverride(member).setAllowed(Permission.VIEW_CHANNEL).setDenied(
                             Permission.MESSAGE_SEND
                         ).queue()
-                        textChannel.sendMessageEmbeds(Embed.applicationAnswer(false)).queue()
+                        textChannel.sendMessageEmbeds(Embeds.applicationAnswer(false)).queue()
                         textChannel.sendMessage(event.member!!.asMention).queue()
                     }
                 event.reply("${event.member!!.user.effectiveName} hat die Bewerbung abgelehnt.").setEphemeral(false)

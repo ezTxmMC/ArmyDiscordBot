@@ -1,9 +1,9 @@
 package de.eztxm.armydiscordbot.util
 
+import net.dv8tion.jda.api.components.buttons.Button
 import net.dv8tion.jda.api.entities.emoji.Emoji
-import net.dv8tion.jda.api.interactions.components.buttons.Button
 
-class Button {
+class Buttons {
     companion object {
 
         fun apply(): Button {
