@@ -16,7 +16,7 @@ class Embed {
             embedBuilder.setTitle("ezArmy")
             embedBuilder.setFooter("powered by eztxm.de")
             embedBuilder.setColor(Color(0, 95, 255))
-            embedBuilder.setDescription("Herzlich willkommen auf dem Community-Discord von ezTxmMC `" + user.effectiveName + "`.")
+            embedBuilder.setDescription("Herzlich willkommen auf dem Community-Discord der ezArmy `" + user.effectiveName + "`.")
             return embedBuilder.build()
         }
 
@@ -31,7 +31,7 @@ class Embed {
 
         fun apply(): MessageEmbed {
             val embedBuilder = EmbedBuilder()
-            val jsonArray = ArmyDiscordBot.jsonConfig!!.get("Embeds").asJsonObject().get("ApplyEmbed") as JsonArray<*>
+            val jsonArray = ArmyDiscordBot.jsonConfig.get("Embeds").asJsonObject()["ApplyEmbed"] as JsonArray<*>
             val stringBuilder = StringBuilder()
             for (any in jsonArray) {
                 val string = any as String
